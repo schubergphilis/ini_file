@@ -1,9 +1,9 @@
-name 'inifile'
-maintainer 'The Authors'
+name 'ini_file'
+maintainer 'Gert Kremer'
 maintainer_email 'gkremer@schubergphilis.com'
 license 'apachev2'
-description 'Installs/Configures inifile'
-long_description 'Installs/Configures inifile'
+description 'Installs/Configures ini_file'
+long_description 'Installs/Configures ini_file'
 version '0.1.0'
 
 # If you upload to Supermarket you should set this so your cookbook
