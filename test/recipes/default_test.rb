@@ -5,14 +5,14 @@
 # The Inspec reference, with examples and extensive documentation, can be
 # found at https://docs.chef.io/inspec_reference.html
 
-unless os.windows?
-  describe user('root') do
-    it { should exist }
-    skip 'This is an example test, replace with your own test.'
-  end
-end
+testfile = '/tmp/test_ini_file_cookbook.ini'
 
-describe port(80) do
-  it { should_not be_listening }
-  skip 'This is an example test, replace with your own test.'
+describe file(testfile) do
+  it { should exist }                                          # output file was created
+  its('content') { should match /^\[test\]$/ }                 # stanza [test] was created
+  its('content') { should match /^world = yes$/ }              # create_if_missing did not overwrite existing entry
+  its('content') { should match /^one = 1$/ }                  # create works
+  its('content') { should match /^three = 3$/ }	               # create_if_missing added missing entry
+  its('content') { should_not match /^delete = me$/ }          # Verify delete action works
+  its('content') { should match /^notify = I was notified$/ }  # notifications of ini_entry works
 end

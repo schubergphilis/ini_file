@@ -15,19 +15,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'pry'
-
 resource_name 'ini_entry'
 default_action :create
-
-begin
-  require 'inifile'
-rescue LoadError
-  chef_gem 'inifile' do
-    compile_time true
-    action :install
-  end
-end
 
 property :filename, String, name_property: true
 property :stanza, String, required: true
@@ -36,12 +25,11 @@ property :value, String
 
 load_current_value do
   begin
+    require 'inifile'
     cur = IniFile.load(@filename)
 
     # UGLY HACK ALERT: we need to get stanze and entry from @run_context.resource_collection.find 'ini_entry[/tmp/bla.ini:test:two]', as they are not to be found in the current scope
     my_def = @run_context.resource_collection.find "#{@declared_type}[#{@name}]"
-
-    #binding.pry
 
     @value = cur[my_def.stanza][my_def.entry]
   rescue NameError
@@ -51,18 +39,20 @@ end
 action :create do
   converge_if_changed :value do
     ini_write_entry(@new_resource.filename, @new_resource.stanza, @new_resource.entry, @new_resource.value)
+    @new_resource.updated = true
   end
 end
 
 action :create_if_missing do
-  binding.pry
   if not @current_resource.value
     ini_write_entry(@new_resource.filename, @new_resource.stanza, @new_resource.entry, @new_resource.value)
+    @new_resource.updated = true
   end
 end
 
 action :delete do
-  if @current_resource
+  if @current_resource.value
     ini_delete_entry(@new_resource.filename, @new_resource.stanza, @new_resource.entry)
+    @new_resource.updated = true
   end
 end

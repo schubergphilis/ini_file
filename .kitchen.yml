@@ -17,6 +17,7 @@ platforms:
 suites:
   - name: default
     run_list:
+      - recipe[ini_file::default]
       - recipe[ini_file::test]
     verifier:
       inspec_tests:

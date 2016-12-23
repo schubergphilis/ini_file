@@ -1,10 +1,8 @@
 #
 # Cookbook Name:: inifile
-# Library:: helper
+# Recipe:: default
 #
-# Helper functions to manipulate entries in ini files
-#
-# Copyright 2016 Schuberg Philis
+# Copyright 2016 The Authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,17 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-def ini_write_entry(filename,stanza,entry,value)
-  require 'inifile'
-  f = IniFile.load(filename)
-  f[stanza][entry]=value
-  f.write
-end
-
-
-def ini_delete_entry(filename,stanza,entry)
-  require 'inifile'
-  f = IniFile.load(filename)
-  f[stanza].delete(entry)
-  f.write
+chef_gem 'inifile' do
+  compile_time true
+  action :install
 end

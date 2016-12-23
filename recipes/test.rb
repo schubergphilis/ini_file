@@ -21,12 +21,13 @@ chef_gem 'inifile' do
   action :install
 end
 
-testfile='/tmp/bla.ini'
+testfile='/tmp/test_ini_file_cookbook.ini'
 
 file testfile do
   content <<EOF
 [hello]
 world = yes
+delete = me
 EOF
 end
 
@@ -49,4 +50,20 @@ actions.each { |e|
   end
 
 }
-     
+    
+ini_entry 'delete-me' do
+  action   :delete
+  filename testfile
+  stanza   'hello'
+  entry    'delete' 
+  notifies :create, 'ini_entry[notify-me]'
+end
+
+ini_entry 'notify-me' do
+  action   :nothing
+  filename testfile
+  stanza   'hello'
+  entry    'notify'
+  value    'I was notified'
+end
+  
