@@ -1,7 +1,7 @@
 # Inifile Cookbook
 
 This cookcook manages individual entries in INI style configuration files,
-such as described here: https://en.wikipedia.org/wiki/INI_file
+such as described here: https://en.wikipedia.org/wiki/INI_file. 
 
 The primary (initial) use case which triggered the creation of this cookbook
 is to allow us to more precisely manipulate entries within Splunk configuration
