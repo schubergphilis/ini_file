@@ -72,6 +72,12 @@ You can use the ini_entry resource in your own recipes like:
     value    'world
   end
 ```
+The example above would lead to config file test.ini looking like this:
+```
+[test]
+hello = world
+```
+(this assumes splendid isolation, as your config file might also contain other config entries - it will of course leave those alone)
 
 ## Usage
 
