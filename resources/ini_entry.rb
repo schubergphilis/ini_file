@@ -19,19 +19,15 @@ resource_name 'ini_entry'
 default_action :create
 
 property :filename, String, name_property: true
-property :stanza, String, required: true
-property :entry, String, required: true
-property :value, String
+property :stanza,   String, required: true, desired_state: false
+property :entry,    String, required: true, desired_state: false
+property :value,    String
 
 load_current_value do
   begin
     require 'inifile'
     cur = IniFile.load(@filename)
-
-    # UGLY HACK ALERT: we need to get stanze and entry from @run_context.resource_collection.find 'ini_entry[/tmp/bla.ini:test:two]', as they are not to be found in the current scope
-    my_def = @run_context.resource_collection.find "#{@declared_type}[#{@name}]"
-
-    @value = cur[my_def.stanza][my_def.entry]
+    @value = cur[@stanza][@entry]
   rescue NameError
   end
 end
