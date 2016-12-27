@@ -1,11 +1,11 @@
 # Inifile Cookbook
 
 This cookcook manages individual entries in INI style configuration files,
-such as described here: https://en.wikipedia.org/wiki/INI_file
+such as described here: https://en.wikipedia.org/wiki/INI_file. 
 
 The primary (initial) use case which triggered the creation of this cookbook
-is to allow use to more precisely manipulate entries within Splunk configuration
-files. Templates have been used for this in the past, but that is know to cause
+is to allow us to more precisely manipulate entries within Splunk configuration
+files. Templates have been used for this in the past, but that is known to cause
 conflicts when both Chef as well as Splunk want to write to these files.
 
 This cookbook was inspired on xml_edit, which provides similar functionality
@@ -19,7 +19,7 @@ RubyGem: inifile (is installed via the ini__file::default recipe)
 Chef version 12.5 or higher (required due to the use of new style custom resources)
 
 ## Attributes
-This cookbook defines not attributes, it solely provides a resource to manipulate
+This cookbook does not define attributes, it solely provides a resource to manipulate
 entries in INI files
 
 ## Recipes
@@ -27,16 +27,16 @@ entries in INI files
 ### default.rb
 
 When using the ini_entry provided by this cookbook, you need to ensure this recipe
-in include on your node's run_list. The default.rb recipe installs the inifile rubygem
+is include on your node's run_list. The default.rb recipe installs the inifile rubygem
 at compile time.
 
 ### test.rb
 
-This recipe's purpose is 2-fold. It primary exists as a recipe to run from test
+This recipe's purpose is twofold. It primary exists as a recipe to run from test
 kitchen to run a set of actions against a sample INI file. After this recipe has been run
-it's output is verified using InSpec.
+its output is verified using InSpec.
 
-The second use of this recipe is to service as a example on how to use the ini_entry chef
+The second use of this recipe is to service as an example on how to use the ini_entry chef
 resource.
 
 ## Resources
@@ -44,6 +44,7 @@ resource.
 ### ini_entry
 
 This cookbook provides a single resource called 'ini_entry'. This resource is defined as:
+```
    resource_name 'ini_entry'
    default_action :create
    
@@ -51,14 +52,18 @@ This cookbook provides a single resource called 'ini_entry'. This resource is de
    property :stanza, String, required: true
    property :entry, String, required: true
    property :value, String
+```
 
 It supports the following actions:
+```
    :nothing		Do nothing, unless another action is notified by another resource
    :create		Set <entry> in [<stanza>] section to <value> in INI file <filename>
    :create_if_missing   Set <entry> in [<stanza>] section to <value> only if the <entry> currently does not exist
    :delete		Remove [<stanza>] <entry> from the INI file <filename>
+```
 
 You can use the ini_entry resource in your own recipes like:
+```
   ini_entry 'create-me' do
     action   :create
     filename 'test.ini'
@@ -66,12 +71,18 @@ You can use the ini_entry resource in your own recipes like:
     entry    'hello'
     value    'world
   end
-
+```
+The example above would lead to config file test.ini looking like this:
+```
+[test]
+hello = world
+```
+(this assumes splendid isolation, as your config file might also contain other config entries - it will of course leave those alone)
 
 ## Usage
 
 To use this cookbook:
-- make sure it is uploaded in to your chef server
+- make sure it is uploaded to your chef server
 - declare a dependency on this cookbook in one of your own cookbooks
 - include_recipe 'ini_file::default' in your runlist to install the inifile rubygem
 - add the required ini_entry resources in your own recipes to manage ini_file entries
