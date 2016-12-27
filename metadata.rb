@@ -4,7 +4,7 @@ maintainer_email 'gkremer@schubergphilis.com'
 license 'apachev2'
 description 'Installs/Configures ini_file'
 long_description 'Installs/Configures ini_file'
-version '0.1.0'
+version '0.1.1'
 
 # If you upload to Supermarket you should set this so your cookbook
 # gets a `View Issues` link
@@ -12,4 +12,4 @@ version '0.1.0'
 
 # If you upload to Supermarket you should set this so your cookbook
 # gets a `View Source` link
-# source_url 'https://github.com/<insert_org_here>/inifile' if respond_to?(:source_url)
+source_url 'https://sbp.gitlab.schubergphilis.com/gkremer/ini_file' if respond_to?(:source_url)

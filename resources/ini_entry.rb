@@ -21,7 +21,7 @@ default_action :create
 property :filename, String, name_property: true
 property :stanza,   String, required: true, desired_state: false
 property :entry,    String, required: true, desired_state: false
-property :value,    String
+property :value,    String, desired_state: false
 
 load_current_value do
   begin
