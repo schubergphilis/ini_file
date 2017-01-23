@@ -35,20 +35,20 @@ end
 action :create do
   converge_if_changed :value do
     ini_write_entry(@new_resource.filename, @new_resource.stanza, @new_resource.entry, @new_resource.value)
-    @new_resource.updated = true
+    @new_resource.updated_by_last_action(true)
   end
 end
 
 action :create_if_missing do
-  if not @current_resource.value
+  unless @current_resource.value
     ini_write_entry(@new_resource.filename, @new_resource.stanza, @new_resource.entry, @new_resource.value)
-    @new_resource.updated = true
+    @new_resource.updated_by_last_action(true)
   end
 end
 
 action :delete do
   if @current_resource.value
     ini_delete_entry(@new_resource.filename, @new_resource.stanza, @new_resource.entry)
-    @new_resource.updated = true
+    @new_resource.updated_by_last_action(true)
   end
 end
