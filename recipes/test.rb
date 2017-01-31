@@ -21,9 +21,10 @@ chef_gem 'inifile' do
   action :install
 end
 
-testfile='/tmp/test_ini_file_cookbook.ini'
+testfile1='/tmp/test1_ini_file_cookbook.ini'
+testfile2='/tmp/test2_ini_file_cookbook.ini'
 
-file testfile do
+file testfile1 do
   content <<EOF
 [hello]
 world = yes
@@ -41,9 +42,9 @@ actions = [
 
 actions.each { |e|
 
-  ini_entry "#{testfile}:#{e[:stanza]}:#{e[:entry]}" do
+  ini_entry "#{testfile1}:#{e[:stanza]}:#{e[:entry]}" do
     action   e[:action]
-    filename testfile
+    filename testfile1
     stanza   e[:stanza]
     entry    e[:entry]
     value    e[:value]
@@ -53,7 +54,7 @@ actions.each { |e|
     
 ini_entry 'delete-me' do
   action   :delete
-  filename testfile
+  filename testfile1
   stanza   'hello'
   entry    'delete' 
   notifies :create, 'ini_entry[notify-me]'
@@ -61,9 +62,21 @@ end
 
 ini_entry 'notify-me' do
   action   :nothing
-  filename testfile
+  filename testfile1
   stanza   'hello'
   entry    'notify'
   value    'I was notified'
 end
-  
+
+# Test to create an entry an a file which doesn't exist yet 
+file testfile2 do
+  action   :delete
+end
+
+ini_entry 'create-in-non-existing-file' do
+  filename testfile2
+  action   :create
+  stanza   'test'
+  entry    'test2'
+  value    'test2-value'
+end 

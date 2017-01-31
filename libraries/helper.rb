@@ -20,6 +20,9 @@
 
 def ini_write_entry(filename,stanza,entry,value)
   require 'inifile'
+  if not ::File.exist? filename
+     ::File.open(filename,'w').close
+  end
   f = IniFile.load(filename)
   f[stanza][entry]=value
   f.write

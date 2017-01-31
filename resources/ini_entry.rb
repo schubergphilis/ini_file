@@ -24,11 +24,16 @@ property :entry,    String, required: true, desired_state: false
 property :value,    String, desired_state: false
 
 load_current_value do
-  begin
-    require 'inifile'
-    cur = IniFile.load(@filename)
-    @value = cur[@stanza][@entry]
-  rescue NameError
+  if ::File.exist? @filename
+    begin
+      require 'inifile'
+      cur = IniFile.load(@filename)
+      @value = cur[@stanza][@entry]
+    rescue NameError
+      @value = nil
+    end
+  else
+    @value = nil
   end
 end
 

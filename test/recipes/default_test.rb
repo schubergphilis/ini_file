@@ -5,9 +5,11 @@
 # The Inspec reference, with examples and extensive documentation, can be
 # found at https://docs.chef.io/inspec_reference.html
 
-testfile = '/tmp/test_ini_file_cookbook.ini'
+testfile1 = '/tmp/test1_ini_file_cookbook.ini'
+testfile2 = '/tmp/test2_ini_file_cookbook.ini'
 
-describe file(testfile) do
+
+describe file(testfile1) do
   it { should exist }                                          # output file was created
   its('content') { should match /^\[test\]$/ }                 # stanza [test] was created
   its('content') { should match /^world = yes$/ }              # create_if_missing did not overwrite existing entry
@@ -15,4 +17,10 @@ describe file(testfile) do
   its('content') { should match /^three = 3$/ }	               # create_if_missing added missing entry
   its('content') { should_not match /^delete = me$/ }          # Verify delete action works
   its('content') { should match /^notify = I was notified$/ }  # notifications of ini_entry works
+end
+
+
+describe file(testfile2) do
+  it { should exist }                                          # output file was created
+  its('content') { should match /^test2 = test2-value$/ }  # notifications of ini_entry works
 end
