@@ -17,6 +17,8 @@ describe file(testfile1) do
   its('content') { should match /^three = 3$/ }	               # create_if_missing added missing entry
   its('content') { should_not match /^delete = me$/ }          # Verify delete action works
   its('content') { should match /^notify = I was notified$/ }  # notifications of ini_entry works
+  its('content') { should_not match /^dontnotify = I should not have been notified$/ } # existing numeric entries should not be updated
+  its('content') { should match /^semicolons = this;is;a;test$/ } # entries with semi-colons in the value
 end
 
 

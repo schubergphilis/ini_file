@@ -29,6 +29,7 @@ load_current_value do
       require 'inifile'
       cur = IniFile.load(@filename)
       @value = cur[@stanza][@entry]
+      @value = @value.to_s unless @value == nil
     rescue NameError
       @value = nil
     end

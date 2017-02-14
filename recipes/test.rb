@@ -29,6 +29,7 @@ file testfile1 do
 [hello]
 world = yes
 delete = me
+number = 1
 EOF
 end
 
@@ -66,6 +67,31 @@ ini_entry 'notify-me' do
   stanza   'hello'
   entry    'notify'
   value    'I was notified'
+end
+
+ini_entry 'semicolons' do
+  action   :create
+  filename testfile1
+  stanza   'hello'
+  entry    'semicolons'
+  value    'this;is;a;test'
+end
+
+ini_entry 'update-number' do
+  action   :create
+  filename testfile1
+  stanza   'hello'
+  entry    'number'
+  value    '1'
+  notifies :create, 'ini_entry[dont-notify-me]'
+end
+
+ini_entry 'dont-notify-me' do
+  action   :nothing
+  filename testfile1
+  stanza   'hello'
+  entry    'dontnotify'
+  value    'I should not have been notified'
 end
 
 # Test to create an entry an a file which doesn't exist yet 

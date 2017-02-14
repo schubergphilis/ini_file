@@ -23,7 +23,7 @@ def ini_write_entry(filename,stanza,entry,value)
   if not ::File.exist? filename
      ::File.open(filename,'w').close
   end
-  f = IniFile.load(filename)
+  f = IniFile.load(filename, :comment => '#')
   f[stanza][entry]=value
   f.write
 end
