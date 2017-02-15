@@ -27,7 +27,7 @@ load_current_value do
   if ::File.exist? @filename
     begin
       require 'inifile'
-      cur = IniFile.load(@filename)
+      cur = IniFile.load(@filename, :comment => '#')
       @value = cur[@stanza][@entry]
       @value = @value.to_s unless @value == nil
     rescue NameError

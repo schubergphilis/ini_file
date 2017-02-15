@@ -30,6 +30,7 @@ file testfile1 do
 world = yes
 delete = me
 number = 1
+semicolons2 = existing;semi;colon;separated
 EOF
 end
 
@@ -69,12 +70,29 @@ ini_entry 'notify-me' do
   value    'I was notified'
 end
 
-ini_entry 'semicolons' do
+ini_entry 'semicolons1' do
   action   :create
   filename testfile1
   stanza   'hello'
-  entry    'semicolons'
+  entry    'semicolons1'
   value    'this;is;a;test'
+end
+
+ini_entry 'semicolons2' do
+  action   :create
+  filename testfile1
+  stanza   'hello'
+  entry    'semicolons2'
+  value    'existing;semi;colon;separated'
+  notifies :create, 'ini_entry[notify-semicolons2]'
+end
+
+ini_entry 'notify-semicolons2' do
+  action   :nothing
+  filename testfile1
+  stanza   'hello'
+  entry    'semicolons2failed'
+  value    'true'
 end
 
 ini_entry 'update-number' do

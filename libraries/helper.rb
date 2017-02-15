@@ -31,7 +31,7 @@ end
 
 def ini_delete_entry(filename,stanza,entry)
   require 'inifile'
-  f = IniFile.load(filename)
+  f = IniFile.load(filename, :comment => '#')
   f[stanza].delete(entry)
   f.write
 end
