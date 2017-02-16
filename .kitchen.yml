@@ -10,9 +10,8 @@ verifier:
   name: inspec
 
 platforms:
-  - name: centos-6.7
-    driver:
-      box_url: file:///home/gkremer/src/vagrant-lxc-base-boxes/output/2016-03-16/vagrant-lxc-centos-6-amd64.box
+  - name: centos-6.8
+  - name: centos-7.3
 
 suites:
   - name: default
