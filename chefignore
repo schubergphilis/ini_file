@@ -93,6 +93,7 @@ CONTRIBUTING*
 CHANGELOG*
 TESTING*
 MAINTAINERS.toml
+.delivery/*
 
 # Strainer #
 ############
